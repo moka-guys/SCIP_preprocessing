@@ -1,0 +1,76 @@
+{
+  "name": "scip_preprocessing_step_3_v1.0.1",
+  "title": "scip_preprocessing_step_3_v1.0.1",
+  "summary": "scip_preprocessing_step_3_v1.0.1",
+  "tags": [
+    "coverage"
+  ],
+  "properties": {
+    "github release": "v1.0.0"
+  },
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "name":"bam_file",
+      "label":"BAM file",
+      "help":"",
+      "class":"file",
+      "patterns":["*bam","*BAM"],
+      "optional": false
+    },
+    {
+      "name":"umi_sequence",
+      "label":"UMI sequence (R2)",
+      "help":"FASTQ file containing UMI sequences",
+      "class":"file",
+      "patterns":["*fastq","*fq"],
+      "optional": false
+    },
+    {
+      "name" : "fgbio_jar",
+      "label" : "fgbio jar file",
+      "help" : "Jar file containing fgbio functionality.",
+      "class":"file",
+      "patterns": ["*.jar"],
+      "optional" : false
+    },
+    {
+      "name": "ref_genome",
+      "label": "reference genome",
+      "help": "reference genome",
+      "class": "file",
+      "optional": false
+    }
+    ],
+  "outputSpec": [
+    {
+      "name": "bam_file",
+      "label": "bam file",
+      "help": "",
+      "class": "file",
+      "optional": true
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+    {"name": "samtools", "version": "1.10-3"},
+    {"name":"bwa"},
+    {"name":"wget"},
+    {"name": "openjdk-17-jre-headless"}
+    ],
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem1_ssd1_v2_x16"
+      }
+    },
+    "distribution" : "Ubuntu",
+    "release" : "20.04",
+    "version":"0",
+    "file": "src/code.sh",
+    "interpreter": "bash"
+
+  }
+}
+
+
+   

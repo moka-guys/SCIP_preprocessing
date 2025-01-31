@@ -1,0 +1,68 @@
+{
+  "name": "scip_preprocessing_step_5_v1.0.1",
+  "title": "scip_preprocessing_step_5_v1.0.1",
+  "summary": "scip_preprocessing_step_5_v1.0.1",
+  "tags": [
+    "coverage"
+  ],
+  "properties": {
+    "github release": "v1.0.0"
+  },
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "name":"forward_consensus",
+      "label":"",
+      "help":"FASTQ file containing forward reads",
+      "class":"file",
+      "patterns":["*fastq","*fq"],
+      "optional": false
+    },
+    {
+      "name":"reverse_consensus",
+      "label":"",
+      "help":"FASTQ file containing reverse reads",
+      "class":"file",
+      "patterns":["*fastq","*fq"],
+      "optional": false
+    },
+    {
+      "name": "ref_genome",
+      "label": "reference genome",
+      "help": "reference genome",
+      "class": "file",
+      "optional": false
+    }
+    ],
+  "outputSpec": [
+    {
+      "name": "sam_file",
+      "label": "sam file",
+      "help": "",
+      "class": "file",
+      "optional": true
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+    {"name": "samtools", "version": "1.10-3"},
+    {"name":"bwa"},
+    {"name":"wget"},
+    {"name": "openjdk-17-jre-headless"}
+    ],
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem1_ssd1_v2_x16"
+      }
+    },
+    "distribution" : "Ubuntu",
+    "release" : "20.04",
+    "version":"0",
+    "file": "src/code.sh",
+    "interpreter": "bash"
+
+  }
+}
+
+
+   
