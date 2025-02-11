@@ -8,7 +8,7 @@ set -e -x -o pipefail
 dx-download-all-inputs --except ref_genome --parallel
 
 # make output folders
-mkdir -p ~/out ./genome ~/out/all_outputs
+mkdir -p ~/out ./genome ~/out/all_outputs ~/out/hbb_mpileup ~/out/sced_mpileup
 
 # make directory for reference genome and unpackage the reference genome
 dx cat "$ref_genome" | tar zxvf - -C genome
@@ -23,9 +23,9 @@ echo ${describer}
 echo ${bam_file_path[0]}
 echo ${bam_file_path[1]}
 
-samtools mpileup -l ${hbb_bed_file_path} ${bam_file_path} -o ~/out/all_outputs/con_${describer}_HBB.M3.mpileup 
+samtools mpileup -l ${hbb_bed_file_path} ${bam_file_path} -o ~/out/hbb_mpileup/con_${describer}_HBB.M3.mpileup 
 
-samtools mpileup -l ${sced_bed_file_path} ${bam_file_path} -o ~/out/all_outputs/con_${describer}_SCED.M3.mpileup
+samtools mpileup -l ${sced_bed_file_path} ${bam_file_path} -o ~/out/sced_mpileup/con_${describer}_SCED.M3.mpileup
 
 #bcftools mpileup -f genome/genome.fa -R ${hbb_bed_file_path} ${bam_file_path} -o ~/out/all_outputs/con_${describer}_HBB.bcftools.M3.vcf
 
