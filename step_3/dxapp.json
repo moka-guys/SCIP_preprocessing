@@ -1,7 +1,7 @@
 {
-  "name": "scip_preprocessing_step_3_v1.0.2",
-  "title": "scip_preprocessing_step_3_v1.0.2",
-  "summary": "scip_preprocessing_step_3_v1.0.2",
+  "name": "scip_preprocessing_step_3_v1.0.5",
+  "title": "scip_preprocessing_step_3_v1.0.5",
+  "summary": "scip_preprocessing_step_3_v1.0.5",
   "tags": [
     "coverage"
   ],
@@ -33,13 +33,6 @@
       "class":"file",
       "patterns": ["*.jar"],
       "optional" : false
-    },
-    {
-      "name": "ref_genome",
-      "label": "reference genome",
-      "help": "reference genome",
-      "class": "file",
-      "optional": false
     }
     ],
   "outputSpec": [
