@@ -21,7 +21,9 @@ describer=$(echo ${describer}| grep -o 'SCIP[0-9]*' | tail -n 1)
 echo ${describer}
 
 # fgbio UMI processing
-java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path} AnnotateBamWithUmis -i ${bam_file_path} -f ${umi_sequence_path} -o fgtag_${describer}.bam
+# increased the maximum heap size of JVM from 16G to 48G (java -Xmx48g -jar).
+
+java -Xmx32g -XX:+AggressiveHeap -jar ${fgbio_jar_path} AnnotateBamWithUmis -i ${bam_file_path} -f ${umi_sequence_path} -o fgtag_${describer}.bam
 
 java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path} SortBam -i fgtag_${describer}.bam -o fgsort_${describer}.bam -s queryname
 
