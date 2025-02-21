@@ -17,12 +17,8 @@ echo ${describer}
 describer=$(echo ${describer}| grep -o 'SCIP[0-9]*' | tail -n 1)
 echo ${describer}
 
-# AnnotateBamwithUMIs requires input BAM to be sorted by queryname, not coordinate. Do this in a prelim step to avoid AnnotateBamWithUmis memory overloading
-samtools sort -n -@ 4 ${bam_file_path} -o sorted_${describer}.bam
 # fgbio UMI processing
-# increased the maximum heap size of JVM from 16G to 48G (java -Xmx48g -jar).
-
-java -Xmx32g -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:ParallelGCThreads=4 -jar ${fgbio_jar_path} AnnotateBamWithUmis -i sorted_${describer}.bam -f ${umi_sequence_path} -o fgtag_${describer}.bam
+java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path} AnnotateBamWithUmis -i ${bam_file_path} -f ${umi_sequence_path} -o fgtag_${describer}.bam
 
 java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path} SortBam -i fgtag_${describer}.bam -o fgsort_${describer}.bam -s queryname
 
