@@ -26,7 +26,7 @@ java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path}  SetMateInformation -i f
 
 java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path} GroupReadsByUmi -i setmate_${describer}.bam -f ${describer}_family_size_histogram.txt -s adjacency -o fggroup_${describer}.bam
 
-java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path} CallMolecularConsensusReads -i fggroup_${describer}.bam -o ~/out/bam_file/fgcon_${describer}.M3.bam -M 1
+java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path} CallMolecularConsensusReads -i fggroup_${describer}.bam -o ~/out/bam_file/fgcon_${describer}.M3.bam -M 3
 
 # upload outputs
 dx-upload-all-outputs --parallel
