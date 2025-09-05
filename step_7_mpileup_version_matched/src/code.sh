@@ -13,6 +13,12 @@ mkdir -p ~/out ./genome ~/out/all_outputs ~/out/hbb_mpileup ~/out/sced_mpileup ~
 # make directory for reference genome and unpackage the reference genome
 dx cat "$ref_genome" | tar zxvf - -C genome
 
+# build samtools
+tar -xvjf ${samtools_precompiled_path}
+
+apt-get update
+apt-get install -y libncurses5
+
 echo ${bam_file_prefix} # also works - umi filename
 describer=$(echo ${bam_file_prefix}) #${describer}
 echo ${describer}	
@@ -26,17 +32,17 @@ echo ${bam_file_path[1]}
 # filter bam to select reads with insert size of 155bp or less - this might also happen at the consensus reads stage? 
 # in which case, beginning of step 7 
 
-samtools view -h ${bam_file_path} | \
+./bin/samtools view -h ${bam_file_path} | \
 awk 'substr($0,1,1)=="@" || ($9>=0 && $9<=155) || ($9<=0 && $9>=-155)' | \
-samtools view -b > ${describer}_155bp.bam
+./bin/samtools view -b > ${describer}_155bp.bam
 
-samtools mpileup -d 8000 -l ${hbb_bed_file_path} ${bam_file_path} -o ~/out/hbb_mpileup/con_${describer}_HBB.M3.mpileup 
+./bin/samtools mpileup -d 8000 -l ${hbb_bed_file_path} ${bam_file_path} -o ~/out/hbb_mpileup/con_${describer}_HBB.M3.mpileup 
 
-samtools mpileup -d 8000 -l ${sced_bed_file_path} ${bam_file_path} -o ~/out/sced_mpileup/con_${describer}_SCED.M3.mpileup
+./bin/samtools mpileup -d 8000 -l ${sced_bed_file_path} ${bam_file_path} -o ~/out/sced_mpileup/con_${describer}_SCED.M3.mpileup
 
-samtools mpileup -d 8000 -l ${hbb_bed_file_path} ${describer}_155bp.bam -o ~/out/hbb_mpileup_155bp/con_${describer}_155bp_HBB.M3.mpileup 
+./bin/samtools mpileup -d 8000 -l ${hbb_bed_file_path} ${describer}_155bp.bam -o ~/out/hbb_mpileup_155bp/con_${describer}_155bp_HBB.M3.mpileup 
 
-samtools mpileup -d 8000 -l ${sced_bed_file_path} ${describer}_155bp.bam -o ~/out/sced_mpileup_155bp/con_${describer}_155bp_SCED.M3.mpileup
+./bin/samtools mpileup -d 8000 -l ${sced_bed_file_path} ${describer}_155bp.bam -o ~/out/sced_mpileup_155bp/con_${describer}_155bp_SCED.M3.mpileup
 
 
 # upload outputs

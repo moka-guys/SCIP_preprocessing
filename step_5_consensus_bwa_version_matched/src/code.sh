@@ -13,7 +13,8 @@ mkdir -p ~/out ./genome ~/out/sam_file
 # make directory for reference genome and unpackage the reference genome
 dx cat "$ref_genome" | tar zxvf - -C genome
 
-
+# build bwa-mem
+tar -xvjf ${bwa_precompiled_path}
 
 echo ${forward_consensus_prefix} # also works - umi filename
 describer=$(echo ${forward_consensus_prefix}) #${describer}
@@ -23,7 +24,7 @@ describer=$(echo ${describer}| grep -o 'SCIP[0-9]*' | tail -n 1)
 echo ${describer}
 
 # align consensus reads
-bwa mem genome/genome.fa ${forward_consensus_path} ${reverse_consensus_path} > ~/out/sam_file/con_${describer}.M3.sam
+./bin/bwa mem genome/genome.fa ${forward_consensus_path} ${reverse_consensus_path} > ~/out/sam_file/con_${describer}.M3.sam
 
 # upload outputs
 dx-upload-all-outputs --parallel

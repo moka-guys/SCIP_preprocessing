@@ -1,7 +1,7 @@
 {
-  "name": "SCIP mpileup",
-  "title": "SCIP mpileup",
-  "summary": "SCIP mpileup",
+  "name": "SCIP mpileup samtools 1.3.1",
+  "title": "SCIP mpileup samtools 1.3.1",
+  "summary": "SCIP mpileup samtools 1.3.1",
   "tags": [
     "coverage"
   ],
@@ -40,6 +40,14 @@
       "help": "reference genome",
       "class": "file",
       "optional": false
+    },
+    {
+      "name" : "samtools_precompiled",
+      "label" : "samtools precompiled executable code",
+      "help" : "file containing samtools functionality.",
+      "class":"file",
+      "patterns": ["*.bz2"],
+      "optional" : false
     }
     ],
   "outputSpec": [
@@ -74,9 +82,6 @@
   ],
   "runSpec": {
     "execDepends": [
-    {"name": "samtools", "version": "1.10-3"},
-    {"name":"bcftools"},
-    {"name":"bwa"},
     {"name":"wget"},
     {"name": "openjdk-17-jre-headless"}
     ],

@@ -1,7 +1,7 @@
 {
-  "name": "SCIP consensus sortsam",
-  "title": "SCIP consensus sortsam",
-  "summary": "SCIP consensus sortsam",
+  "name": "SCIP consensus BWAMEM 0.7.13",
+  "title": "SCIP consensus BWAMEM 0.7.13",
+  "summary": "SCIP consensus BWAMEM 0.7.13",
   "tags": [
     "coverage"
   ],
@@ -11,20 +11,20 @@
   "dxapi": "1.0.0",
   "inputSpec": [
     {
-      "name":"sam_file",
-      "label":"SAM file",
-      "help":"",
+      "name":"forward_consensus",
+      "label":"",
+      "help":"FASTQ file containing forward reads",
       "class":"file",
-      "patterns":["*sam","*SAM"],
+      "patterns":["*fastq","*fq"],
       "optional": false
     },
     {
-      "name" : "picard_jar",
-      "label" : "picard jar file",
-      "help" : "Jar file containing picard functionality.",
+      "name":"reverse_consensus",
+      "label":"",
+      "help":"FASTQ file containing reverse reads",
       "class":"file",
-      "patterns": ["*.jar"],
-      "optional" : false
+      "patterns":["*fastq","*fq"],
+      "optional": false
     },
     {
       "name": "ref_genome",
@@ -32,21 +32,27 @@
       "help": "reference genome",
       "class": "file",
       "optional": false
+    },
+    {
+      "name" : "bwa_precompiled",
+      "label" : "bwa precompiled executable code",
+      "help" : "file containing bwa functionality.",
+      "class":"file",
+      "patterns": ["*.bz2"],
+      "optional" : false
     }
     ],
   "outputSpec": [
     {
-      "name": "bam_file",
-      "label": "bam file",
+      "name": "sam_file",
+      "label": "sam file",
       "help": "",
-      "class": "array:file",
+      "class": "file",
       "optional": true
     }
   ],
   "runSpec": {
     "execDepends": [
-    {"name": "samtools", "version": "1.10-3"},
-    {"name":"bwa"},
     {"name":"wget"},
     {"name": "openjdk-17-jre-headless"}
     ],

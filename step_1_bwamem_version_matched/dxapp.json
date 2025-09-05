@@ -1,7 +1,7 @@
 {
-  "name": "SCIP BWA-MEM",
-  "title": "SCIP BWA-MEM",
-  "summary": "SCIP BWA-MEM",
+  "name": "SCIP BWA-MEM 0.7.13",
+  "title": "SCIP BWA-MEM 0.7.13",
+  "summary": "SCIP BWA-MEM 0.7.13",
   "tags": [
     "coverage"
   ],
@@ -40,6 +40,14 @@
       "help": "reference genome",
       "class": "file",
       "optional": false
+    },
+    {
+      "name" : "bwa_precompiled",
+      "label" : "bwa precompiled executable code",
+      "help" : "file containing bwa functionality.",
+      "class":"file",
+      "patterns": ["*.bz2"],
+      "optional" : false
     }
     ],
   "outputSpec": [
@@ -53,8 +61,6 @@
   ],
   "runSpec": {
     "execDepends": [
-    {"name": "samtools", "version": "1.10-3"},
-    {"name":"bwa"},
     {"name":"wget"},
     {"name": "openjdk-17-jre-headless"}
     ],
