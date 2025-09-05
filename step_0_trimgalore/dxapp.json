@@ -1,0 +1,81 @@
+{
+  "name": "SCIP TrimGalore",
+  "title": "SCIP TrimGalore",
+  "summary": "SCIP TrimGalore",
+  "tags": [
+    "coverage"
+  ],
+  "properties": {
+    "github release": "v1.0.0"
+  },
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "name":"fastq_forward_reads_r1",
+      "label":"Forward reads (R1)",
+      "help":"FASTQ file containing forward reads",
+      "class":"file",
+      "patterns":["*fastq","*fq"],
+      "optional": false
+    },
+    {
+      "name":"fastq_reverse_reads_r3",
+      "label":"Reverse reads (R3)",
+      "help":"FASTQ file containing reverse reads",
+      "class":"file",
+      "patterns":["*fastq","*fq"],
+      "optional": false
+    },
+    {
+      "name": "trimgalore_file",
+      "label": "trim galore source code",
+      "help": "trim galore source code",
+      "class": "file",
+      "optional": false
+    }
+    ],
+  "outputSpec": [
+    {
+      "name": "trimmed_fastq_r1",
+      "label": "trimmed fastqs r1",
+      "help": "",
+      "class": "file",
+      "optional": true
+    },
+    {
+      "name": "trimmed_fastq_r3",
+      "label": "trimmed fastqs r3",
+      "help": "",
+      "class": "file",
+      "optional": true
+    },
+    {
+      "name": "trimmed_fastqs_unpaired",
+      "label": "unpaired trimmed fastqs",
+      "help": "",
+      "class": "array:file",
+      "optional": true
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+    {"name": "samtools", "version": "1.10-3"},
+    {"name":"cutadapt"},
+    {"name": "openjdk-17-jre-headless"}
+    ],
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem1_ssd1_v2_x16"
+      }
+    },
+    "distribution" : "Ubuntu",
+    "release" : "20.04",
+    "version":"0",
+    "file": "src/code.sh",
+    "interpreter": "bash"
+
+  }
+}
+
+
+   

@@ -1,0 +1,98 @@
+{
+  "name": "SCIP mpileup",
+  "title": "SCIP mpileup",
+  "summary": "SCIP mpileup",
+  "tags": [
+    "coverage"
+  ],
+  "properties": {
+    "github release": "v1.0.0"
+  },
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "name":"bam_file",
+      "label":"BAM file",
+      "help":"",
+      "class":"array:file",
+      "optional": false
+    },
+    {
+      
+      "name": "hbb_bed_file",
+      "label": "HBB Bed file",
+      "help": "bed file to calculate mpileup over the HBB gene",
+      "class": "file",
+      "patterns": ["*.bed"],
+      "optional": false
+    },
+    {
+      "name": "sced_bed_file",
+      "label": "Sickle cell alleles Bed file",
+      "help": "bed file to calculate mpileup over the SCED sickle cell alleles",
+      "class": "file",
+      "patterns": ["*.bed"],
+      "optional": false
+    },
+    {
+      "name": "ref_genome",
+      "label": "reference genome",
+      "help": "reference genome",
+      "class": "file",
+      "optional": false
+    }
+    ],
+  "outputSpec": [
+    {
+      "name": "hbb_mpileup",
+      "label": "hbb mpileup",
+      "help": "hbb mpileup",
+      "class": "file",
+      "optional": true
+    },
+    {
+      "name": "sced_mpileup",
+      "label": "sced mpileup",
+      "help": "sced mpileup",
+      "class": "file",
+      "optional": true
+    },
+    {
+      "name": "hbb_mpileup_155bp",
+      "label": "hbb mpileup_155bp",
+      "help": "hbb mpileup",
+      "class": "file",
+      "optional": true
+    },
+    {
+      "name": "sced_mpileup_155bp",
+      "label": "sced mpileup_155bp",
+      "help": "sced mpileup",
+      "class": "file",
+      "optional": true
+    }
+  ],
+  "runSpec": {
+    "execDepends": [
+    {"name": "samtools", "version": "1.10-3"},
+    {"name":"bcftools"},
+    {"name":"bwa"},
+    {"name":"wget"},
+    {"name": "openjdk-17-jre-headless"}
+    ],
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem1_ssd1_v2_x16"
+      }
+    },
+    "distribution" : "Ubuntu",
+    "release" : "20.04",
+    "version":"0",
+    "file": "src/code.sh",
+    "interpreter": "bash"
+
+  }
+}
+
+
+   
