@@ -1,7 +1,7 @@
 {
-  "name": "scip_preprocessing_step_7_v1.0.1_mpileup",
-  "title": "scip_preprocessing_step_7_v1.0.1_mpileup",
-  "summary": "scip_preprocessing_step_7_v1.0.1_mpileup",
+  "name": "SCIP_NM_155forNR_preprocessing_step_7_v1",
+  "title": "SCIP_NM_155forNR_preprocessing_step_7_v1",
+  "summary": "SCIP_NM_155forNR_preprocessing_step_7_v1",
   "tags": [
     "coverage"
   ],
@@ -56,6 +56,20 @@
       "help": "sced mpileup",
       "class": "file",
       "optional": true
+    },
+    {
+      "name": "hbb_mpileup_155bp",
+      "label": "hbb mpileup_155bp",
+      "help": "hbb mpileup",
+      "class": "file",
+      "optional": true
+    },
+    {
+      "name": "sced_mpileup_155bp",
+      "label": "sced mpileup_155bp",
+      "help": "sced mpileup",
+      "class": "file",
+      "optional": true
     }
   ],
   "runSpec": {
@@ -79,6 +93,3 @@
 
   }
 }
-
-
-   

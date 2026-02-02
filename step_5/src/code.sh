@@ -22,11 +22,6 @@ echo ${describer}
 
 # align consensus reads
 bwa mem -M -t 8 genome/genome.fa ${forward_consensus_path} ${reverse_consensus_path} > ~/out/sam_file/con_${describer}.M3.sam
-#bwa mem -M -t 8 genome/genome.fa ${forward_consensus_path} ${reverse_consensus_path} > ~/out/sam_file/con_${describer}.M3.bam
-
-# could output straight to bam and then sort here
-
-#BWA-MEM FASTQ Read Mapper v1.3 - fastqs as inputs, bam bai outputs sorted
 
 # upload outputs
 dx-upload-all-outputs --parallel
