@@ -8,7 +8,7 @@ set -e -x -o pipefail
 dx-download-all-inputs --except ref_genome --parallel
 
 # make output folders
-mkdir -p ~/out ./genome ~/out/all_outputs ~/out/hbb_mpileup ~/out/sced_mpileup
+mkdir -p ~/out ./genome ~/out/all_outputs ~/out/hbb_mpileup ~/out/sced_mpileup ~/out/hbb_mpileup_155bp ~/out/sced_mpileup_155bp
 
 # make directory for reference genome and unpackage the reference genome
 dx cat "$ref_genome" | tar zxvf - -C genome
