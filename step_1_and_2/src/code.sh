@@ -20,10 +20,15 @@ echo ${describer}
 sample=$(echo ${describer}| grep -o 'SCIP[0-9]*' | tail -n 1)
 echo ${sample}
 
-# set JVM settings for mem1_ssd1_v2_x16 (~32GB RAM)
-JAVA_OPTS="-Xmx20g -XX:+UseParallelGC -XX:ParallelGCThreads=4 -Djava.io.tmpdir=${TMPDIR:-/tmp}"
+# Calculate 60% of available RAM for Java heap (safe buffer)
+AVAILABLE_RAM_GB=$(free -g | awk '/^Mem:/{print int($2 * 0.6)}')
+JAVA_THREADS=$(( $(nproc) / 4 ))
+[ ${JAVA_THREADS} -lt 2 ] && JAVA_THREADS=2
 
-# Align, compress, and sort
+# Set JVM options variably dependent on instance type and resource available
+JAVA_OPTS="-Xmx${AVAILABLE_RAM_GB}g -XX:+UseParallelGC -XX:ParallelGCThreads=${JAVA_THREADS} -Djava.io.tmpdir=${TMPDIR:-/tmp}"
+
+# step 1: align, step 2: compress and sort
 bwa mem -M -t $(nproc) genome/genome.fa \
   ${fastq_forward_reads_r1_path} \
   ${fastq_reverse_reads_r3_path} | \
