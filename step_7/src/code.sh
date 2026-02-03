@@ -23,6 +23,12 @@ echo ${describer}
 echo ${bam_file_path[0]}
 echo ${bam_file_path[1]}
 
+# filter bam to reads with insert size of 155bp or less
+samtools view -h ${bam_file_path} | \
+awk 'substr($0,1,1)=="@" || ($9>=0 && $9<=155) || ($9<=0 && $9>=-155)' | \
+samtools view -b > ${describer}_155bp.bam
+
+# perform mpileup
 samtools mpileup -l ${hbb_bed_file_path} ${bam_file_path} -o ~/out/hbb_mpileup/con_${describer}_HBB.M3.mpileup 
 
 samtools mpileup -l ${sced_bed_file_path} ${bam_file_path} -o ~/out/sced_mpileup/con_${describer}_SCED.M3.mpileup
