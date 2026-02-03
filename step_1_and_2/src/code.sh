@@ -20,12 +20,19 @@ echo ${describer}
 sample=$(echo ${describer}| grep -o 'SCIP[0-9]*' | tail -n 1)
 echo ${sample}
 
-# align reads to GRCh38, compress to BAM and sort by coordinate
-bwa mem -M -t 8 genome/genome.fa ${fastq_forward_reads_r1_path} ${fastq_reverse_reads_r3_path} | \
-java -Djava.awt.headless=true -jar ${picard_jar_path} SortSam \
+# set JVM settings for mem1_ssd1_v2_x16 (~32GB RAM)
+JAVA_OPTS="-Xmx20g -XX:+UseParallelGC -XX:ParallelGCThreads=4 -Djava.io.tmpdir=${TMPDIR:-/tmp}"
+
+# Align, compress, and sort
+bwa mem -M -t 16 genome/genome.fa \
+  ${fastq_forward_reads_r1_path} \
+  ${fastq_reverse_reads_r3_path} | \
+java ${JAVA_OPTS} -Djava.awt.headless=true -jar ${picard_jar_path} SortSam \
   I=/dev/stdin \
   O=~/out/bam_file/${describer}.bam \
-  SORT_ORDER=coordinate
+  SORT_ORDER=coordinate \
+  CREATE_INDEX=true \
+  COMPRESSION_LEVEL=5
 
 # upload outputs
 dx-upload-all-outputs --parallel
