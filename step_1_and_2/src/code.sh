@@ -24,7 +24,7 @@ echo ${sample}
 JAVA_OPTS="-Xmx20g -XX:+UseParallelGC -XX:ParallelGCThreads=4 -Djava.io.tmpdir=${TMPDIR:-/tmp}"
 
 # Align, compress, and sort
-bwa mem -M -t 16 genome/genome.fa \
+bwa mem -M -t $(nproc) genome/genome.fa \
   ${fastq_forward_reads_r1_path} \
   ${fastq_reverse_reads_r3_path} | \
 java ${JAVA_OPTS} -Djava.awt.headless=true -jar ${picard_jar_path} SortSam \
