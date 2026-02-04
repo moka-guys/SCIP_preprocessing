@@ -17,16 +17,37 @@ echo ${describer}
 describer=$(echo ${describer}| grep -o 'SCIP[0-9]*' | tail -n 1)
 echo ${describer}
 
-# fgbio UMI processing
-java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path} AnnotateBamWithUmis -i ${bam_file_path} -f ${umi_sequence_path} -o fgtag_${describer}.bam
+# # fgbio UMI processing
+# java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path} AnnotateBamWithUmis -i ${bam_file_path} -f ${umi_sequence_path} -o fgtag_${describer}.bam
 
-java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path} SortBam -i fgtag_${describer}.bam -o fgsort_${describer}.bam -s queryname
+# java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path} SortBam -i fgtag_${describer}.bam -o fgsort_${describer}.bam -s queryname
 
-java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path}  SetMateInformation -i fgsort_${describer}.bam -o setmate_${describer}.bam
+# java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path}  SetMateInformation -i fgsort_${describer}.bam -o setmate_${describer}.bam
 
-java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path} GroupReadsByUmi -i setmate_${describer}.bam -f ${describer}_family_size_histogram.txt -s adjacency -o fggroup_${describer}.bam
+# java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path} GroupReadsByUmi -i setmate_${describer}.bam -f ${describer}_family_size_histogram.txt -s adjacency -o fggroup_${describer}.bam
 
-java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path} CallMolecularConsensusReads -i fggroup_${describer}.bam -o ~/out/bam_file/fgcon_${describer}.M3.bam -M 3
+# java -Xmx16g -XX:+AggressiveHeap -jar ${fgbio_jar_path} CallMolecularConsensusReads -i fggroup_${describer}.bam -o ~/out/bam_file/fgcon_${describer}.M3.bam -M 3
+
+
+# Calculate 60% of available RAM for Java heap (safe buffer)
+AVAILABLE_RAM_GB=$(free -g | awk '/^Mem:/{print int($2 * 0.6)}')
+JAVA_THREADS=$(( $(nproc) / 4 ))
+[ ${JAVA_THREADS} -lt 2 ] && JAVA_THREADS=2
+
+# Set JVM options variably dependent on instance type and resource available
+JAVA_OPTS="-Xmx${AVAILABLE_RAM_GB}g -XX:+UseParallelGC -XX:ParallelGCThreads=${JAVA_THREADS} -Djava.io.tmpdir=${TMPDIR:-/tmp}"
+
+# run fgbio UMI processing
+java ${JAVA_OPTS} -jar ${fgbio_jar_path} --compression 1 AnnotateBamWithUmis \
+  -i ${bam_file_path} -f ${umi_sequence_path} -o /dev/stdout | \
+java ${JAVA_OPTS} -jar ${fgbio_jar_path} --compression 1 SortBam \
+  -i /dev/stdin -o /dev/stdout -s queryname | \
+java ${JAVA_OPTS} -jar ${fgbio_jar_path} --compression 1 SetMateInformation \
+  -i /dev/stdin -o /dev/stdout | \
+java ${JAVA_OPTS} -jar ${fgbio_jar_path} --compression 1 GroupReadsByUmi \
+  -i /dev/stdin -f ~/out/${describer}_family_size_histogram.txt -s adjacency -o /dev/stdout | \
+java ${JAVA_OPTS} -jar ${fgbio_jar_path} --compression 5 CallMolecularConsensusReads \
+  -i /dev/stdin -o ~/out/bam_file/fgcon_${describer}.M3.bam -M 3
 
 # upload outputs
 dx-upload-all-outputs --parallel

@@ -21,15 +21,7 @@ sample=$(echo ${describer}| grep -o 'SCIP[0-9]*' | tail -n 1)
 echo ${sample}
 
 # align trimmed reads to GRCh38
-#bwa mem -B 5 -k 17 -O 6,6 -E 1,1 -M -t 8 genome/genome.fa ${fastq_forward_reads_r1_path} ${fastq_reverse_reads_r3_path} > ~/out/sam_file/${describer}.sam
-#bwa mem -B 4 -k 18 -O 5,5 -E 1,0 -M -t 8 genome/genome.fa ${fastq_forward_reads_r1_path} ${fastq_reverse_reads_r3_path} > ~/out/sam_file/${describer}.sam
 bwa mem -M -t 8 genome/genome.fa ${fastq_forward_reads_r1_path} ${fastq_reverse_reads_r3_path} > ~/out/sam_file/${describer}.sam
-
-
-#bwa mem -M -t 8 genome/genome.fa ${fastq_forward_reads_r1_path} ${fastq_reverse_reads_r3_path} > ~/out/sam_file/${describer}.sam
-
-
-
 
 # upload outputs
 dx-upload-all-outputs --parallel

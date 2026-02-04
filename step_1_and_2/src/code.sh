@@ -32,7 +32,7 @@ JAVA_OPTS="-Xmx${AVAILABLE_RAM_GB}g -XX:+UseParallelGC -XX:ParallelGCThreads=${J
 bwa mem -M -t $(nproc) genome/genome.fa \
   ${fastq_forward_reads_r1_path} \
   ${fastq_reverse_reads_r3_path} | \
-java ${JAVA_OPTS} -Djava.awt.headless=true -jar ${picard_jar_path} SortSam \ 
+java ${JAVA_OPTS} -Djava.awt.headless=true -jar ${picard_jar_path} SortSam \
   I=/dev/stdin \
   O=~/out/bam_file/${describer}.bam \
   SORT_ORDER=coordinate \
