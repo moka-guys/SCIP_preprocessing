@@ -56,6 +56,9 @@
         "instanceType": "mem1_ssd1_v2_x16"
       }
     },
+    "executionPolicy": {
+      "priority": "high"
+    },
     "distribution" : "Ubuntu",
     "release" : "20.04",
     "version":"0",
