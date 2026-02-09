@@ -25,8 +25,9 @@ AVAILABLE_RAM_GB=$(free -g | awk '/^Mem:/{print int($2 * 0.6)}')
 JAVA_THREADS=$(( $(nproc) / 4 ))
 [ ${JAVA_THREADS} -lt 2 ] && JAVA_THREADS=2
 
+# this was used attempt 1
 # Set JVM options variably dependent on instance type and resource available
-JAVA_OPTS="-Xmx${AVAILABLE_RAM_GB}g -XX:+UseParallelGC -XX:ParallelGCThreads=${JAVA_THREADS} -Djava.io.tmpdir=${TMPDIR:-/tmp}"
+JAVA_OPTS="-Xmx${AVAILABLE_RAM_GB}g -XX:+UseParallelGC -XX:ParallelGCThreads=${JAVA_THREADS} -XX:+UseAdaptiveSizePolicy -Djava.io.tmpdir=/home/dnanexus "
 
 # step 1: align, step 2: compress and sort
 bwa mem -M -t $(nproc) genome/genome.fa \
