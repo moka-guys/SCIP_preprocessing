@@ -35,7 +35,11 @@ JAVA_THREADS=$(( $(nproc) / 4 ))
 [ ${JAVA_THREADS} -lt 2 ] && JAVA_THREADS=2
 
 # Set JVM options variably dependent on instance type and resource available
-JAVA_OPTS="-Xmx${AVAILABLE_RAM_GB}g -XX:+UseParallelGC -XX:ParallelGCThreads=${JAVA_THREADS} -Djava.io.tmpdir=${TMPDIR:-/tmp}"
+#JAVA_OPTS="-Xmx${AVAILABLE_RAM_GB}g -XX:+UseParallelGC -XX:ParallelGCThreads=${JAVA_THREADS} -Djava.io.tmpdir=${TMPDIR:-/tmp}"
+
+# NEW TEST - 09/02/2026
+# Set JVM options variably dependent on instance type and resource available
+JAVA_OPTS="-Xmx${AVAILABLE_RAM_GB}g -XX:+UseParallelGC -XX:ParallelGCThreads=${JAVA_THREADS} -XX:+UseAdaptiveSizePolicy -Djava.io.tmpdir=/home/dnanexus "
 
 # run fgbio UMI processing
 java ${JAVA_OPTS} -jar ${fgbio_jar_path} --compression 1 AnnotateBamWithUmis \
