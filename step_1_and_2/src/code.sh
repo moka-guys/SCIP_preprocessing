@@ -39,6 +39,9 @@ java ${JAVA_OPTS} -Djava.awt.headless=true -jar ${picard_jar_path} SortSam \
   SORT_ORDER=coordinate \
   COMPRESSION_LEVEL=5 
 
+# index bam
+samtools index ~/out/bam_file/${describer}.bam 
+
 # upload outputs
 dx-upload-all-outputs --parallel
 
