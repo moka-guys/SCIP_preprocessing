@@ -28,7 +28,7 @@ java -Djava.awt.headless=true -jar ${picard_jar_path} SortSam I=${sam_file_path}
 samtools index ~/out/bam_file/con_${describer}.M3.sorted.bam 
 
 # mark duplicates for sambamba + chanjo
-java -Djava.awt.headless=true -jar ${picard_jar_path} MarkDuplicates I=/out/bam_file/con_${describer}.M3.sorted.bam O=/out/markdup_bam_file/con_${describer}.M3.markdup.bam M=${describer}.markdup_metrics.txt
+java -Djava.awt.headless=true -jar ${picard_jar_path} MarkDuplicates I=~/out/bam_file/con_${describer}.M3.sorted.bam O=~/out/markdup_bam_file/con_${describer}.M3.markdup.bam M=${describer}.markdup_metrics.txt
 
 # index markdup bam
 samtools index ~/out/markdup_bam_file/con_${describer}.M3.markdup.bam ~/out/markdup_bai_file/con_${describer}.M3.markdup.bam.bai 
