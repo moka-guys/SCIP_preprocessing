@@ -8,7 +8,7 @@ set -e -x -o pipefail
 dx-download-all-inputs --except ref_genome --parallel
 
 # make output folders
-mkdir -p ~/out ./genome ~/out/bam_file
+mkdir -p ~/out ./genome ~/out/bam_file ~/out/markdup_bam_file ~/out/markdup_bai_file
 
 # make directory for reference genome and unpackage the reference genome
 dx cat "$ref_genome" | tar zxvf - -C genome
@@ -26,6 +26,12 @@ java -Djava.awt.headless=true -jar ${picard_jar_path} SortSam I=${sam_file_path}
 
 # index consensus bam
 samtools index ~/out/bam_file/con_${describer}.M3.sorted.bam 
+
+# mark duplicates for sambamba + chanjo
+java -Djava.awt.headless=true -jar ${picard_jar_path} MarkDuplicates I=/out/bam_file/con_${describer}.M3.sorted.bam O=/out/markdup_bam_file/con_${describer}.M3.markdup.bam M=${describer}.markdup_metrics.txt
+
+# index markdup bam
+samtools index ~/out/markdup_bam_file/con_${describer}.M3.markdup.bam ~/out/markdup_bai_file/con_${describer}.M3.markdup.bam.bai 
 
 # upload outputs
 dx-upload-all-outputs --parallel
