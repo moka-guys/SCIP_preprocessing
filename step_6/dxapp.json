@@ -1,7 +1,7 @@
 {
-  "name": "SCIP_NM_155forNR_preprocessing_step_6_v1",
-  "title": "SCIP_NM_155forNR_preprocessing_step_6_v1",
-  "summary": "SCIP_NM_155forNR_preprocessing_step_6_v1",
+  "name": "SCIP_NM_155forNR_preprocessing_step_6_v2",
+  "title": "SCIP_NM_155forNR_preprocessing_step_6_v2",
+  "summary": "SCIP_NM_155forNR_preprocessing_step_6_v2",
   "tags": [
     "coverage"
   ],
@@ -39,7 +39,14 @@
       "name": "bam_file",
       "label": "bam file",
       "help": "",
-      "class": "array:file",
+      "class": "file",
+      "optional": true
+    },
+    {
+      "name": "bai_file",
+      "label": "bai file",
+      "help": "",
+      "class": "file",
       "optional": true
     }
   ],

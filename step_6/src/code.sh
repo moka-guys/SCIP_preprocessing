@@ -8,7 +8,7 @@ set -e -x -o pipefail
 dx-download-all-inputs --except ref_genome --parallel
 
 # make output folders
-mkdir -p ~/out ./genome ~/out/bam_file
+mkdir -p ~/out ./genome ~/out/bam_file ~/out/bai_file
 
 # make directory for reference genome and unpackage the reference genome
 dx cat "$ref_genome" | tar zxvf - -C genome
@@ -25,7 +25,7 @@ echo ${describer}
 java -Djava.awt.headless=true -jar ${picard_jar_path} SortSam I=${sam_file_path} O=~/out/bam_file/con_${describer}.M3.sorted.bam SORT_ORDER=coordinate
 
 # index consensus bam
-samtools index ~/out/bam_file/con_${describer}.M3.sorted.bam 
+samtools index ~/out/bam_file/con_${describer}.M3.sorted.bam ~/out/bai_file/con_${describer}.M3.sorted.bam.bai
 
 # upload outputs
 dx-upload-all-outputs --parallel
