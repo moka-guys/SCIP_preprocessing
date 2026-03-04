@@ -37,6 +37,7 @@ java ${JAVA_OPTS} -Djava.awt.headless=true -jar ${picard_jar_path} SortSam \
   I=/dev/stdin \
   O=~/out/bam_file/${describer}.bam \
   SORT_ORDER=coordinate \
+  MAX_RECORDS_IN_RAM=200000 \
   COMPRESSION_LEVEL=5 
 
 # index bam
